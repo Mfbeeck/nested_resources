@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
-  resources :departments
-  resources :organizations
+  root 'organizations#index'
+  resources :organizations do
+    resources :departments
+  end
+
+  resources :departments do
+    resources :positions
+  end
+
+  resources :positions
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,5 +1,6 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
+  before_action :set_organization, only: [:create]
 
   # GET /departments
   # GET /departments.json
@@ -10,6 +11,7 @@ class DepartmentsController < ApplicationController
   # GET /departments/1
   # GET /departments/1.json
   def show
+    @position = Position.new
   end
 
   # GET /departments/new
@@ -24,7 +26,9 @@ class DepartmentsController < ApplicationController
   # POST /departments
   # POST /departments.json
   def create
-    @department = Department.new(department_params)
+
+    @department = @organization.departments.new(department_params)
+   
 
     respond_to do |format|
       if @department.save
@@ -65,6 +69,11 @@ class DepartmentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_department
       @department = Department.find(params[:id])
+    end
+    def set_organization
+      #security fix
+      #current_user.organizations.find(params[:organization_id])
+      @organization = Organization.find(params[:organization_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -7,8 +7,21 @@
 
 <p>
   <strong>Organization:</strong>
-  <%= @department.organization %>
+  <%= @department.organization.name %>
 </p>
 
+<p>
+  <strong>Positions:</strong>
+  <ul>
+  <% @department.positions.each do |pos| %>
+  <li><%=link_to pos.name, pos%>
+  <%end%>
+  </ul>
+</p>
+
+<h2>New Position</h2>
+
+<%= render 'positions/form'%>
+
 <%= link_to 'Edit', edit_department_path(@department) %> |
-<%= link_to 'Back', departments_path %>
+<%= link_to 'Back', @department.organization %>
